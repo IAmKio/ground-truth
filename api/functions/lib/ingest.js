@@ -2,8 +2,9 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const geohash = require('ngeohash');
 
-let db = admin.firestore();
 admin.initializeApp();
+
+let db = admin.firestore();
 
 const request = functions.https.onRequest(async (request, response) => {
   console.log('Incoming data:', {
