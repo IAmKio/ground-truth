@@ -20,10 +20,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Lint and Test
+    - name: Deploy to Firebase Functions
       run: |
         npm install -g firebase-tools
         cd api && firebase use wearequarantined
+        cd functions && npm i && cd ..
         firebase deploy --only functions --token "$FIREBASE_TOKEN"
       env:
         CI: true
