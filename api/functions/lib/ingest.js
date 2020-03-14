@@ -2,6 +2,12 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const geohash = require('ngeohash');
 
+try {
+  admin.initializeApp();
+} catch (e) {
+  console.error('Workaround fired:', e);
+}
+
 let db = admin.firestore();
 
 const request = functions.https.onRequest(async (request, response) => {
