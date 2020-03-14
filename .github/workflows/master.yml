@@ -23,7 +23,7 @@ jobs:
     - name: Lint and Test
       run: |
         npm install -g firebase-tools
-        firebase use wearequarantined
+        cd api && firebase use wearequarantined
         cd api && firebase deploy --only functions --token "$FIREBASE_TOKEN"
       env:
         CI: true
