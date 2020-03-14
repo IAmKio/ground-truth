@@ -13,14 +13,22 @@ try {
 }
 
 if (serviceAccount) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: 'https://wearequarantined.firebaseio.com',
-  });
+  try {
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+      databaseURL: 'https://wearequarantined.firebaseio.com',
+    });
+  } catch (e) {
+    console.error('Cought init error:', e);
+  }
 
   console.log('⚡️ Initialised app using credentials file.');
 } else {
-  admin.initializeApp();
+  try {
+    admin.initializeApp();
+  } catch(e) {
+    console.error('Cought init error:', e);
+  }
 
   console.log('️️️⚡️ Initialised app manually.');
 }
