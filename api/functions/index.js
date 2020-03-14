@@ -1,6 +1,8 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
+const ingest = require('./lib/ingest');
+
 let serviceAccount = null;
 
 try {
@@ -26,3 +28,4 @@ if (serviceAccount) {
 exports.default = functions.https.onRequest((request, response) => {
  response.send('OK');
 });
+exports.ingest = ingest;
