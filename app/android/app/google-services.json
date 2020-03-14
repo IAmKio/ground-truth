@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "764869948606",
+    "firebase_url": "https://wearequarantined.firebaseio.com",
+    "project_id": "wearequarantined",
+    "storage_bucket": "wearequarantined.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:764869948606:android:a991cab2a88b67a477daef",
+        "android_client_info": {
+          "package_name": "com.digitalindustria.quarantine.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "764869948606-s78b849dk8rf3gdet4fm9oal5ceskliq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBj5U9OUL64k2GoB034SpRH48j4ctQVj0c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "764869948606-s78b849dk8rf3gdet4fm9oal5ceskliq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "764869948606-lduo4tlju87tifosth2p7rgrto9ofs79.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.digitalindustria.quarantine.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
