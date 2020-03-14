@@ -25,6 +25,7 @@ jobs:
         npm install -g firebase-tools
         cd api
         npm i
+        firebase login:ci
         firebase deploy --only functions
       env:
         CI: true
