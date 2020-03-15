@@ -26,7 +26,7 @@ const request = functions.https.onRequest(async (request, response) => {
 
   console.log('Layer read complete.');
 
-  mappedLayerData = layerData.map((thisLayerData) => thisLayerData.data());
+  mappedLayerData = layerData.docs.map((thisLayerData) => thisLayerData.data());
 
  return response.send({
    layers: mappedLayerData
