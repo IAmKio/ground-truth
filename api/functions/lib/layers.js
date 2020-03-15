@@ -18,7 +18,8 @@ const request = functions.https.onRequest(async (request, response) => {
   const layerData = await db.collection('layers').get()
   .then((readResult) => {
     console.log('Successfully get layers:', readResult);
-    return layerData.data();
+
+    return readResult.data();
   });
 
   console.log('Layer read complete.');
