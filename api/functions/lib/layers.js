@@ -1,6 +1,8 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
+const mappedLayerData = [];
+
 try {
   admin.initializeApp();
 } catch (e) {
@@ -16,16 +18,18 @@ const request = functions.https.onRequest(async (request, response) => {
   });
 
   const layerData = await db.collection('layers').get()
-  .then((readResult) => {
-    console.log('Successfully get layers:', readResult);
+  .then((snapshot) => {
+    console.log('Successfully get layers:', snapshot);
 
-    return readResult.data();
+    return snapshot;
   });
 
   console.log('Layer read complete.');
 
+  mappedLayerData = layerData.map((thisLayerData) => thisLayerData.data());
+
  return response.send({
-   layers: layerData
+   layers: mappedLayerData
  });
 });
 
