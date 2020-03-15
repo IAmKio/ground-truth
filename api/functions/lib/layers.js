@@ -17,13 +17,14 @@ const request = functions.https.onRequest(async (request, response) => {
 
   const layerData = await db.collection('layers').get()
   .then((readResult) => {
-    console.log('Successfully get laters:', readResult);
+    console.log('Successfully get layers:', readResult);
+    return layerData.data();
   });
 
-console.log('Layer read complete.')
+  console.log('Layer read complete.');
 
  return response.send({
-   layers: layerData.data()
+   layers: layerData
  });
 });
 
