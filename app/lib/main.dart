@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import './screens/home/home.dart';
 
+import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import './classes/home.dart';
+
+import './screens/home/home.dart';
 import './helpers/router.dart';
 
 void main() => runApp(MyApp());
@@ -26,7 +31,10 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.yellow,
       ),
-      home: HomeScreen(routeData: {})
+      home: ChangeNotifierProvider(
+        create: (_) => new Home(),
+        child: HomeScreen(routeData: {}),
+      )
     );
   }
 }

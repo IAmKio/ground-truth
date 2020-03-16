@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:location/location.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 import '../../helpers/user.dart';
 import '../../helpers/router.dart';
+
+import '../../classes/home.dart';
 
 import '../home/tabs/information.dart';
 import '../home/tabs/data-browser.dart';
@@ -22,11 +26,15 @@ class _HomeScreenState extends State<HomeScreen> {
   var userHelper = UserHelper();
   var routerHelper = RouterHelper();
 
+  bool online = false;
+
   Location location = new Location();
 
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
   LocationData _locationData;
+
+  Home homeClass;
 
   InformationScreen informationScreen = new InformationScreen();
   MapScreen mapScreen = new MapScreen();
@@ -36,15 +44,27 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
+    homeClass = Provider.of<Home>(context, listen: false);
+
     start();
     setupGeolocation();
   }
 
   void start() async {
-    userHelper.signInAnonymously();
-    userHelper.getFcmTokenId();
+    await userHelper.signInAnonymously();
+    await userHelper.getFcmTokenId();
 
-    setState(() {});
+    var url = 'https://us-central1-wearequarantined.cloudfunctions.net/presences';
+    await http.post(url, body: {
+      'uid': userHelper.firebaseUser.uid,
+      'fcmToken': userHelper.fcmToken
+    });
+
+    homeClass.online = true;
+
+    setState(() {
+      online = true;
+    });
   }
 
   void setupGeolocation() async {
@@ -82,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: new FloatingActionButton(
           child: new Icon(Icons.my_location),
           onPressed: () {
+            
             routerHelper.router.navigateTo(context, '/report');
           }
         ),

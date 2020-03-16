@@ -37,6 +37,8 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('Rebuilding: Map Pane');
+
     return new Container(
       child: new SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(20, 20, 20, 20),

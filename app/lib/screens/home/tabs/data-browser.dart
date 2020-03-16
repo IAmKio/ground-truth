@@ -37,6 +37,8 @@ class _DataBrowserScreenState extends State<DataBrowserScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('Rebuilding: Data Browser Pane');
+
     return new Container(
       child: new SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
