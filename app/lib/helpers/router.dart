@@ -2,6 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/home/home.dart';
+import '../screens/report/report.dart';
 
 class RouterHelper {
   static final RouterHelper _singleton = new RouterHelper._internal();
@@ -10,6 +11,10 @@ class RouterHelper {
 
   var homeScreenHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return HomeScreen(routeData: params);
+  });
+
+  var reportScreenHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return ReportScreen(routeData: params);
   });
 
   factory RouterHelper() {
@@ -26,6 +31,12 @@ class RouterHelper {
       router.define(
         '/home',
         handler: homeScreenHandler,
+        transitionType: TransitionType.native
+      );
+
+      router.define(
+        '/report',
+        handler: reportScreenHandler,
         transitionType: TransitionType.native
       );
 

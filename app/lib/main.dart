@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import './screens/home/home.dart';
 
+import './helpers/router.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  var routerHelper = RouterHelper();
+
   @override
   Widget build(BuildContext context) {
+    routerHelper.init();
+
     return MaterialApp(
       title: 'Quarantined',
       theme: ThemeData(
