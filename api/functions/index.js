@@ -3,6 +3,7 @@ const admin = require('firebase-admin');
 
 const ingest = require('./lib/ingest');
 const layers = require('./lib/layers');
+const presences = require('./lib/presence');
 
 let serviceAccount = null;
 
@@ -39,3 +40,4 @@ exports.default = functions.https.onRequest((request, response) => {
 });
 exports.ingest = ingest;
 exports.layers = layers;
+exports.presences = presences;

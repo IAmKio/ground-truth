@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../screens/home/home.dart';
 import '../screens/report/report.dart';
+import '../screens/report/geolocate.dart';
 
 class RouterHelper {
   static final RouterHelper _singleton = new RouterHelper._internal();
@@ -15,6 +16,10 @@ class RouterHelper {
 
   var reportScreenHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return ReportScreen(routeData: params);
+  });
+
+  var reportGeolocateScreenHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return ReportGeolocateScreen(routeData: params);
   });
 
   factory RouterHelper() {
@@ -37,6 +42,12 @@ class RouterHelper {
       router.define(
         '/report',
         handler: reportScreenHandler,
+        transitionType: TransitionType.native
+      );
+
+      router.define(
+        '/report-geolocation',
+        handler: reportGeolocateScreenHandler,
         transitionType: TransitionType.native
       );
 
