@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import '../../../helpers/router.dart';
 import '../../../helpers/hotspots.dart';
 
@@ -63,7 +61,7 @@ class _MapScreenState extends State<MapScreen> {
       widgets.add(
         FlatButton.icon(
           onPressed: () {
-
+            routerHelper.router.navigateTo(context, '/map');
           },
           icon: Icon(Icons.map),
           label: new Text(

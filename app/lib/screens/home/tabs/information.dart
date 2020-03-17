@@ -1,6 +1,7 @@
-
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
+
 import '../../../helpers/router.dart';
 
 import '../../../classes/home.dart';
@@ -58,17 +59,6 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
         vsync: this
       )
     );
-    
-    widgets.add(
-      new RaisedButton(
-        child: Text('Count ${homeClass.count}'),
-        onPressed: () {
-          homeClass.increment();
-        }
-      )
-    );
-
-    widgets.add(Text('Count ${homeClass.online}'));
 
     return widgets;
   }

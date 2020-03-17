@@ -23,6 +23,10 @@ class RouterHelper {
     return ReportGeolocateScreen(routeData: params);
   });
 
+  var mapBrowserScreenHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return MapBrowserScreen(routeData: params);
+  });
+
   factory RouterHelper() {
     print('Helpers: Router');
 
@@ -49,6 +53,12 @@ class RouterHelper {
       router.define(
         '/report-geolocation/:layerId',
         handler: reportGeolocateScreenHandler,
+        transitionType: TransitionType.native
+      );
+
+      router.define(
+        '/map',
+        handler: mapBrowserScreenHandler,
         transitionType: TransitionType.native
       );
 

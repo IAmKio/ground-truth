@@ -6,7 +6,8 @@ import '../../helpers/router.dart';
 import '../../helpers/hotspots.dart';
 
 class MapBrowserScreen extends StatefulWidget {
-  const MapBrowserScreen() : super();
+  Map<String, dynamic> routeData;
+  MapBrowserScreen({this.routeData}) : super();
 
   @override
   _MapBrowserScreenState createState() => _MapBrowserScreenState();
@@ -16,6 +17,7 @@ class _MapBrowserScreenState extends State<MapBrowserScreen> {
   var routerHelper = RouterHelper();
   var hotspotsHelper = HotspotHelper();
 
+  List<dynamic> fetchedHotspots;
   GoogleMapController mapsController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   MarkerId selectedMarker;
@@ -38,9 +40,9 @@ class _MapBrowserScreenState extends State<MapBrowserScreen> {
   }
 
   void start() async {
-    var r = await hotspotsHelper.getHotspots();
-    print(r);
+    fetchedHotspots = hotspotsHelper.latestHotspots['hotspots'];
 
+    print(fetchedHotspots);
     setState(() {
       loaded = true;
     });
@@ -48,6 +50,11 @@ class _MapBrowserScreenState extends State<MapBrowserScreen> {
 
   Widget buildWidgets() {
     Widget widget;
+
+    fetchedHotspots.forEach((hotspot) {
+      Map<String, dynamic> thisHotspot = hotspot;
+    });
+
     widget = GoogleMap(
       onMapCreated: _onMapCreated,
       initialCameraPosition: const CameraPosition(
@@ -70,8 +77,13 @@ class _MapBrowserScreenState extends State<MapBrowserScreen> {
   Widget build(BuildContext context) {
     print('Rebuilding: Map Pane');
 
-    return new Container(
-      child: buildWidgets()
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Map'),
+      ),
+      body: Container(
+        child: buildWidgets()
+      ),
     );
   }
 }

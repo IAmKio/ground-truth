@@ -26,7 +26,14 @@ const request = functions.https.onRequest(async (request, response) => {
 
   console.log('Hotspot read complete.');
 
-  mappedHotspotData = hotspotData.docs.map((thishotspotData) => thishotspotData.data());
+  mappedHotspotData = hotspotData.docs.map((thishotspotData) => {
+    const hotspotObject = {
+      hotspotId: thishotspotData.id,
+      ...thishotspotData.data()
+    }
+    
+    return hotspotObject;
+  });
 
  return response.send({
    hotspots: mappedHotspotData
