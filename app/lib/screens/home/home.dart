@@ -116,7 +116,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Tab(icon: Icon(Icons.map)),
             ],
           ),
-          title: Text('Quarantined'),
+          title: Text(
+            'Quarantined',
+            style: TextStyle(
+              fontWeight: FontWeight.bold
+            ),
+          ),
         ),
         body: TabBarView(
           children: [

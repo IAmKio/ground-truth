@@ -1,13 +1,10 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
-import '../classes/report.dart';
-
 import '../screens/home/home.dart';
 import '../screens/report/report.dart';
 import '../screens/report/geolocate.dart';
+import '../screens/map/mapBrowser.dart';
 
 class RouterHelper {
   static final RouterHelper _singleton = new RouterHelper._internal();
