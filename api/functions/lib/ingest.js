@@ -35,6 +35,9 @@ const request = functions.https.onRequest(async (request, response) => {
     console.log('Successfully wrote hotspot:', writeResult);
   });
 
+db.collection('statistics').doc('hotspots')
+  .update("submissionCount", admin.firestore.FieldValue.increment(1));
+
 console.log('Ingestion complete.')
 
  return response.send({
