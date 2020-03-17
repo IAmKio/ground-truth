@@ -26,7 +26,7 @@ const request = functions.https.onRequest(async (request, response) => {
       parseFloat(request.body.latitude),
       parseFloat(request.body.longitude)
     ),
-    hotspotLevel: request.body.level,
+    layerId: request.body.layerId,
     notes: [],
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
     updatedAt: admin.firestore.FieldValue.serverTimestamp()
