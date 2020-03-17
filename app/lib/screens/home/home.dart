@@ -1,8 +1,11 @@
+import 'package:Quarantine/classes/report.dart';
 import 'package:flutter/material.dart';
 
 import 'package:location/location.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+
+import '../report/report.dart';
 
 import '../../helpers/user.dart';
 import '../../helpers/router.dart';
@@ -102,7 +105,6 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: new FloatingActionButton(
           child: new Icon(Icons.my_location),
           onPressed: () {
-            
             routerHelper.router.navigateTo(context, '/report');
           }
         ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../helpers/router.dart';
+import '../../helpers/layers.dart';
 
 class ReportScreen extends StatefulWidget {
   Map<String, dynamic> routeData;
@@ -15,8 +16,11 @@ class ReportScreen extends StatefulWidget {
 
 class _ReportScreenState extends State<ReportScreen> {
   var routerHelper = RouterHelper();
+  var layersHelper = LayersHelper();
   bool loaded = false;
-  Map<String, dynamic> layers;
+  Map<String, dynamic> layers = {
+    'layers': []
+  };
 
   @override
   void initState() {
@@ -28,9 +32,11 @@ class _ReportScreenState extends State<ReportScreen> {
   void start() async {
     print('Report Screen starting...');
 
-    var url = 'https://us-central1-wearequarantined.cloudfunctions.net/layers';
-    var response = await http.get(url);
-    layers = jsonDecode(response.body);
+    // var url = 'https://us-central1-wearequarantined.cloudfunctions.net/layers';
+    // var response = await http.get(url);
+    // layers = jsonDecode(response.body);
+    layers = await layersHelper.fetchLayers();
+    print('Layers $layers');
 
     setState(() {
       loaded = true;
@@ -50,20 +56,25 @@ class _ReportScreenState extends State<ReportScreen> {
       List<dynamic> innerLayers = layers['layers'];
       print(innerLayers);
 
-      innerLayers.forEach((layer) {
-        widgets.add(Card(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ListTile(
-                leading: Icon(Icons.bug_report, size: 50),
-                title: Text('${layer['friendlyName']} (${layer['technicalName']})'),
-                subtitle: Text(layer['shortDescription']),
-              ),
-            ],
-          ),
-        ));
-      });
+      if (innerLayers.length > 0) {
+        innerLayers.forEach((layer) {
+          widgets.add(Card(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(Icons.bug_report, size: 50),
+                  title: Text('${layer['friendlyName']} (${layer['technicalName']})'),
+                  subtitle: Text(layer['shortDescription']),
+                  onTap: () {
+                    routerHelper.router.navigateTo(context, '/report-geolocation/${layer['layerId']}');
+                  },
+                ),
+              ],
+            ),
+          ));
+        });
+      }
     } else {
       widgets.add(new LinearProgressIndicator());
     }

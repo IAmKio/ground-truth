@@ -1,6 +1,10 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
+import '../classes/report.dart';
+
 import '../screens/home/home.dart';
 import '../screens/report/report.dart';
 import '../screens/report/geolocate.dart';
@@ -46,7 +50,7 @@ class RouterHelper {
       );
 
       router.define(
-        '/report-geolocation',
+        '/report-geolocation/:layerId',
         handler: reportGeolocateScreenHandler,
         transitionType: TransitionType.native
       );

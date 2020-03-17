@@ -1,9 +1,9 @@
-import 'dart:convert';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 import '../../helpers/router.dart';
+import '../../helpers/layers.dart';
 
 class ReportGeolocateScreen extends StatefulWidget {
   Map<String, dynamic> routeData;
@@ -13,10 +13,16 @@ class ReportGeolocateScreen extends StatefulWidget {
   _ReportGeolocateScreenState createState() => _ReportGeolocateScreenState();
 }
 
-class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> {
+class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> with TickerProviderStateMixin{
   var routerHelper = RouterHelper();
+  var layerHelper = LayersHelper();
+  
   bool loaded = false;
+  bool showLocationCard = false;
   Map<String, dynamic> layers;
+  String layerId;
+  List<dynamic> fetchedLayers;
+  Map<String, dynamic> selectedLayer;
 
   @override
   void initState() {
@@ -26,11 +32,23 @@ class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> {
   }
 
   void start() async {
-    print('Report Screen starting...');
+    print('Report Geolocate Screen starting...');
+    print(this.widget.routeData);
 
-    var url = 'https://us-central1-wearequarantined.cloudfunctions.net/layers';
-    var response = await http.get(url);
-    layers = jsonDecode(response.body);
+    layerId = this.widget.routeData['layerId'][0];
+    print('Layer ID: $layerId');
+
+    fetchedLayers = layerHelper.layers['layers'];
+    print('Layers from cache: $fetchedLayers');
+
+    selectedLayer = layerHelper.getLayerById(layerId);
+    print('selectedLayer $selectedLayer');
+
+    Timer(Duration(milliseconds: 500), () {
+      setState(() {
+        showLocationCard = true;
+      });
+    });
 
     setState(() {
       loaded = true;
@@ -47,23 +65,41 @@ class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> {
     List<Widget> widgets = [];
 
     if (loaded == true) {
-      List<dynamic> innerLayers = layers['layers'];
-      print(innerLayers);
+      widgets.add(Card(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              leading: Icon(Icons.bug_report, size: 50),
+              title: Text('${selectedLayer['friendlyName']} (${selectedLayer['technicalName']})'),
+              subtitle: Text(selectedLayer['shortDescription']),
+            ),
+          ],
+        ),
+      ));
 
-      innerLayers.forEach((layer) {
-        widgets.add(Card(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ListTile(
-                leading: Icon(Icons.bug_report, size: 50),
-                title: Text('${layer['friendlyName']} (${layer['technicalName']})'),
-                subtitle: Text(layer['shortDescription']),
+      widgets.add(
+        AnimatedSize(
+          duration: Duration(milliseconds: 500),
+          vsync: this,
+          curve: Curves.fastOutSlowIn,
+          child: Container(
+            height: showLocationCard ? null : 0,
+            child: Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(Icons.location_searching, size: 50),
+                    title: Text('Getting a rough location...'),
+                    subtitle: Text('This allows Quarantined to track the rough location of this hotspot...'),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ));
-      });
+        )
+      );
     } else {
       widgets.add(new LinearProgressIndicator());
     }
