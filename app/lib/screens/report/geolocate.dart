@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 
 import '../../helpers/router.dart';
 import '../../helpers/layers.dart';
+import '../../helpers/hotspots.dart';
+import '../../helpers/user.dart';
 
 class ReportGeolocateScreen extends StatefulWidget {
   Map<String, dynamic> routeData;
@@ -16,13 +19,21 @@ class ReportGeolocateScreen extends StatefulWidget {
 class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> with TickerProviderStateMixin{
   var routerHelper = RouterHelper();
   var layerHelper = LayersHelper();
+  var hotspotsHelper = HotspotHelper();
+  var userHelper = UserHelper();
   
   bool loaded = false;
   bool showLocationCard = false;
+  bool showGeolocatedCard = false;
+  bool showReadyCard = false;
+  bool showSubmissionInformation = false;
+
   Map<String, dynamic> layers;
   String layerId;
   List<dynamic> fetchedLayers;
   Map<String, dynamic> selectedLayer;
+  Location location = new Location();
+  LocationData discoveredLocation;
 
   @override
   void initState() {
@@ -45,6 +56,8 @@ class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> with Tick
     print('selectedLayer $selectedLayer');
 
     Timer(Duration(milliseconds: 500), () {
+      findGeolocation();
+
       setState(() {
         showLocationCard = true;
       });
@@ -52,6 +65,21 @@ class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> with Tick
 
     setState(() {
       loaded = true;
+    });
+  }
+
+  findGeolocation() async {
+    discoveredLocation = await location.getLocation();
+
+    Timer(Duration(seconds: 2), () {
+      setState(() {
+        showSubmissionInformation = true;
+      });
+    });
+
+    setState(() {
+      showGeolocatedCard = true;
+      showReadyCard = true;
     });
   }
 
@@ -71,7 +99,10 @@ class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> with Tick
           children: <Widget>[
             ListTile(
               leading: Icon(Icons.bug_report, size: 50),
-              title: Text('${selectedLayer['friendlyName']} (${selectedLayer['technicalName']})'),
+              title: Text(
+                '${selectedLayer['friendlyName']} (${selectedLayer['technicalName']})',
+                style: Theme.of(context).textTheme.title,
+              ),
               subtitle: Text(selectedLayer['shortDescription']),
             ),
           ],
@@ -91,8 +122,111 @@ class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> with Tick
                 children: <Widget>[
                   ListTile(
                     leading: Icon(Icons.location_searching, size: 50),
-                    title: Text('Getting a rough location...'),
+                    title: Text(
+                      'Getting a rough location...',
+                      style: Theme.of(context).textTheme.title
+                    ),
                     subtitle: Text('This allows Quarantined to track the rough location of this hotspot...'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
+      );
+
+      widgets.add(
+        AnimatedSize(
+          duration: Duration(milliseconds: 500),
+          vsync: this,
+          curve: Curves.fastOutSlowIn,
+          child: Container(
+            height: showGeolocatedCard ? null : 0,
+            child: Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(Icons.location_on, size: 50),
+                    title: Text(
+                      'We\'ve got it!',
+                      style: Theme.of(context).textTheme.title
+                    ),
+                    subtitle: Text('Thank you. This allows us to map this data.'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
+      );
+
+      widgets.add(
+        AnimatedSize(
+          duration: Duration(milliseconds: 500),
+          vsync: this,
+          curve: Curves.fastOutSlowIn,
+          child: Container(
+            height: showReadyCard ? null : 0,
+            child: GestureDetector(
+              onTap: () async {
+                var r = await hotspotsHelper.pushHotspot(
+                  anonymousUserId: userHelper.firebaseUser.uid,
+                  layerId: layerId,
+                  latitude: discoveredLocation.latitude,
+                  longitude: discoveredLocation.longitude
+                );
+                
+                print('r: $r');
+              },
+              child: Card(
+                color: Colors.greenAccent,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    ListTile(
+                      leading: Icon(Icons.check, size: 50),
+                      title: Text(
+                        'Ready to report.',
+                        style: Theme.of(context).textTheme.title
+                      ),
+                      subtitle: Text(
+                        'Tap here to submit this hotspot.'
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            )
+        )
+      );
+
+      widgets.add(
+        AnimatedSize(
+          duration: Duration(milliseconds: 500),
+          vsync: this,
+          curve: Curves.fastOutSlowIn,
+          child: Container(
+            height: showSubmissionInformation ? null : 0,
+            child: Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    title: Text(
+                      'Just a reminder...',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    subtitle: Text(
+                      'You are anonymous and we cannot identity you. This data will be used to build a global map of infections, that can be used by you, emergency services, educational institutions and governments for the greater good.',
+                      style: TextStyle(
+                        color: Colors.green
+                      ),
+                    ),
                   ),
                 ],
               ),

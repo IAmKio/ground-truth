@@ -19,12 +19,12 @@ const request = functions.https.onRequest(async (request, response) => {
   const hotspotReference = await db.collection('hotspots').doc().set({
     anonymousUserId: request.body.anonymousUserId,
     geopoint: new admin.firestore.GeoPoint(
-      request.body.latitude,
-      request.body.longitude
+      parseFloat(request.body.latitude),
+      parseFloat(request.body.longitude)
     ),
     geohash: geohash.encode(
-      request.body.latitude,
-      request.body.longitude
+      parseFloat(request.body.latitude),
+      parseFloat(request.body.longitude)
     ),
     hotspotLevel: request.body.level,
     notes: [],

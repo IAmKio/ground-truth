@@ -29,7 +29,12 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
+        fontFamily: GoogleFonts.robotoMono().fontFamily,
+        cardTheme: CardTheme(
+          margin: EdgeInsets.only(bottom: 20)
+        ),
         primarySwatch: Colors.yellow,
+        
       ),
       home: ChangeNotifierProvider(
         create: (_) => new Home(),

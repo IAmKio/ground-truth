@@ -64,7 +64,10 @@ class _ReportScreenState extends State<ReportScreen> {
               children: <Widget>[
                 ListTile(
                   leading: Icon(Icons.bug_report, size: 50),
-                  title: Text('${layer['friendlyName']} (${layer['technicalName']})'),
+                  title: Text(
+                    '${layer['friendlyName']} (${layer['technicalName']})',
+                    style: Theme.of(context).textTheme.title
+                  ),
                   subtitle: Text(layer['shortDescription']),
                   onTap: () {
                     routerHelper.router.navigateTo(context, '/report-geolocation/${layer['layerId']}');
