@@ -5,8 +5,8 @@
 
     <!-- You can insert your own image assets here -->
     <item
-        android:width="329dp"
-        android:height= "48dp"
+        android:width="180dp"
+        android:height= "25dp"
         android:gravity="center"
         >
         <bitmap

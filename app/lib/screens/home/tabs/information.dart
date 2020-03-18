@@ -160,7 +160,7 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
                 ListTile(
                   leading: Icon(Icons.code, size: 50),
                   title: Text('This is an Open Source project'),
-                  subtitle: Text("Anyone view, contribute and download all the code that runs this app and service. Tap here to view the Github project for Quarantine."),
+                  subtitle: Text("Anyone can view, contribute and download all the code that runs this app and service. Tap here to view the Github project for Quarantine."),
                   onTap: () {
                     _launchURL('https://github.com/IAmKio/quarantined');
                   },

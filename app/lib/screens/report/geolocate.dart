@@ -170,6 +170,24 @@ class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> with Tick
             height: showReadyCard ? null : 0,
             child: GestureDetector(
               onTap: () async {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext buildContext) {
+                    return Dialog(
+                      child: new Container(
+                        padding: EdgeInsets.all(20),
+                        child: Row(
+                          children: <Widget>[
+                            CircularProgressIndicator(),
+                            SizedBox(width: 20),
+                            new Text('Thank you! Sending...')
+                          ],
+                        ),
+                      )
+                    );
+                  }
+                );
+
                 var r = await hotspotsHelper.pushHotspot(
                   anonymousUserId: userHelper.firebaseUser.uid,
                   layerId: layerId,
@@ -177,9 +195,27 @@ class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> with Tick
                   longitude: discoveredLocation.longitude
                 );
                 
-                print('r: $r');
+                print('Response: $r');
+
                 Navigator.pop(context);
                 Navigator.pop(context);
+                Navigator.pop(context);
+
+                showDialog(
+                  context: context,
+                  builder: (BuildContext buildContext) {
+                    return Dialog(
+                      child: new Container(
+                        padding: EdgeInsets.all(20),
+                        child: ListTile(
+                          leading: Icon(Icons.favorite, size: 50),
+                          title: Text('Thank you.'),
+                          subtitle: Text('Thank you for reporting this. You\'re helping create a global movement to map infections globally. Head over to the map to view currently reported infections.'),
+                        )
+                      )
+                    );
+                  }
+                );
               },
               child: Card(
                 color: Colors.greenAccent,
@@ -193,7 +229,10 @@ class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> with Tick
                         style: Theme.of(context).textTheme.title
                       ),
                       subtitle: Text(
-                        'Tap here to submit this hotspot.'
+                        'Tap here to submit this hotspot.',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        ),
                       ),
                     ),
                   ],
@@ -224,7 +263,7 @@ class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> with Tick
                       ),
                     ),
                     subtitle: Text(
-                      'You are anonymous and we cannot identity you. This data will be used to build a global map of infections, that can be used by you, emergency services, educational institutions and governments for the greater good.',
+                      'You are anonymous and we cannot identify you. This data will be used to build a global map of infections, that can be used by you, emergency services, educational institutions and governments for the greater good. By sending us this data - you are helping a global effort to map worldwide infections.',
                       style: TextStyle(
                         color: Colors.green
                       ),
