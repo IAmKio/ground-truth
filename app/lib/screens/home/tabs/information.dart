@@ -135,6 +135,9 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
                   leading: Icon(Icons.favorite, size: 50),
                   title: Text('Share the movement'),
                   subtitle: Text("This app works best when everyone is helping. Tap here to share this app with your friends and family."),
+                  onTap: () {
+                    _launchURL('https://onelink.to/efu96g');
+                  },
                 ),
               ],
             ),

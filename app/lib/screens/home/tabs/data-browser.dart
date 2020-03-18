@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../helpers/router.dart';
 import '../../../helpers/statistics.dart';
@@ -16,6 +19,46 @@ class _DataBrowserScreenState extends State<DataBrowserScreen> with TickerProvid
 
   bool loaded = false;
   bool showStatsCards = false;
+  bool showMoreComingCard = false;
+
+  _launchURL(urlToLaunch) async {
+    if (await canLaunch(urlToLaunch)) {
+      await launch(urlToLaunch);
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext buildContext) {
+          return SimpleDialog(
+            contentPadding: EdgeInsets.only(top: 24, left: 24, right: 24),
+            title: Text('Sorry...'),
+            children: <Widget>[
+              new Text('We tried to open this link but encountered issues.'),
+              new Text('Here is the link we tried to open. You can copy this link.'),
+              new TextFormField(
+                initialValue: urlToLaunch
+              ),
+              new ButtonBar(
+                children: <Widget>[
+                  new FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }, 
+                    child: Text(
+                      'OK',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                      ),
+                    )
+                  )
+                ]
+              )
+            ],
+          );
+        }
+      );
+    }
+  }
 
   @override
   void initState() {
@@ -26,6 +69,12 @@ class _DataBrowserScreenState extends State<DataBrowserScreen> with TickerProvid
 
   void start() async {
     await statisticsHelper.fetchStatistics();
+
+    new Timer(Duration(seconds: 2), () {
+      setState(() {
+        showMoreComingCard = true;
+      });
+    });
 
     if (this.mounted) {
       setState(() {
@@ -67,6 +116,35 @@ class _DataBrowserScreenState extends State<DataBrowserScreen> with TickerProvid
           )
         );
       });
+
+      widgets.add(
+        AnimatedSize(
+          duration: Duration(milliseconds: 500),
+          vsync: this,
+          curve: Curves.fastOutSlowIn,
+          child: Container(
+            height: showMoreComingCard ? null : 0,
+            child: Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: new Icon(Icons.timeline, size: 50),
+                    title: Text(
+                      'More statistics are coming' ,
+                      style: Theme.of(context).textTheme.title
+                    ),
+                    subtitle: Text('We\'re working on it, but this app works best when everyone is working together to report infections. Tap here to share this app.'),
+                    onTap: () {
+                      _launchURL('https://onelink.to/efu96g');
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
+      );
     } else {
       widgets.add(AnimatedSize(
         duration: Duration(milliseconds: 500),
