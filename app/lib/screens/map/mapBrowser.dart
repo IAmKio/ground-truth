@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../helpers/router.dart';
 import '../../helpers/hotspots.dart';
+import '../../helpers/user.dart';
 
 class MapBrowserScreen extends StatefulWidget {
   Map<String, dynamic> routeData;
@@ -16,6 +17,7 @@ class MapBrowserScreen extends StatefulWidget {
 class _MapBrowserScreenState extends State<MapBrowserScreen> {
   var routerHelper = RouterHelper();
   var hotspotsHelper = HotspotHelper();
+  var userHelpers = UserHelper();
 
   List<dynamic> fetchedHotspots;
   GoogleMapController mapsController;
@@ -53,13 +55,22 @@ class _MapBrowserScreenState extends State<MapBrowserScreen> {
 
     fetchedHotspots.forEach((hotspot) {
       Map<String, dynamic> thisHotspot = hotspot;
+      Map<String, dynamic> geolocation = thisHotspot['geopoint'];
+
+      MarkerId markerId = new MarkerId(thisHotspot['hotspotId']);
+      Marker marker = Marker(
+        markerId: markerId,
+        position: LatLng(geolocation['_latitude'], geolocation['_longitude'])
+      );
+
+      markers[markerId] = marker;
     });
 
     widget = GoogleMap(
       onMapCreated: _onMapCreated,
-      initialCameraPosition: const CameraPosition(
-        target: LatLng(-33.852, 151.211),
-        zoom: 11.0,
+      initialCameraPosition: CameraPosition(
+        target: LatLng(userHelpers.lastKnownLocation.latitude, userHelpers.lastKnownLocation.longitude),
+        zoom: 5.0,
       ),
       markers: Set<Marker>.of(markers.values),
     );

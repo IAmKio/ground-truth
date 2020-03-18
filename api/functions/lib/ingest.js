@@ -36,7 +36,7 @@ const request = functions.https.onRequest(async (request, response) => {
   });
 
 db.collection('statistics').doc('hotspots')
-  .update("submissionCount", admin.firestore.FieldValue.increment(1));
+  .update("count", admin.firestore.FieldValue.increment(1));
 
 console.log('Ingestion complete.')
 

@@ -16,7 +16,7 @@ class ReportGeolocateScreen extends StatefulWidget {
   _ReportGeolocateScreenState createState() => _ReportGeolocateScreenState();
 }
 
-class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> with TickerProviderStateMixin{
+class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> with TickerProviderStateMixin {
   var routerHelper = RouterHelper();
   var layerHelper = LayersHelper();
   var hotspotsHelper = HotspotHelper();

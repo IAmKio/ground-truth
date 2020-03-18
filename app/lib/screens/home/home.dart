@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     _locationData = await location.getLocation();
-    print(_locationData);
+    userHelper.lastKnownLocation = _locationData;
   }
 
   @override

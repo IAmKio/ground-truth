@@ -1,12 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+import 'package:location/location.dart';
+
 class UserHelper {
   static final UserHelper _singleton = new UserHelper._internal();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-
+  
   FirebaseUser firebaseUser;
   String fcmToken;
+  LocationData lastKnownLocation;
 
   factory UserHelper() {
     return _singleton;
