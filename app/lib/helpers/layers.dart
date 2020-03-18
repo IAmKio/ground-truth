@@ -14,7 +14,6 @@ class LayersHelper {
   Future<dynamic> fetchLayers() async {
     var url = 'https://us-central1-wearequarantined.cloudfunctions.net/layers';
     var response = await http.get(url);
-    print(response.body);
     print(response.statusCode);
 
     layers = jsonDecode(response.body);

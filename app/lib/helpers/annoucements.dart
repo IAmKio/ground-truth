@@ -15,7 +15,6 @@ class AnnouncementsHelper {
   Future<dynamic> fetchAnnouncements() async {
     var url = 'https://us-central1-wearequarantined.cloudfunctions.net/announcements';
     var response = await http.get(url);
-    print(response.body);
     print(response.statusCode);
 
     announcements = jsonDecode(response.body);

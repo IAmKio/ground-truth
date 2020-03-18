@@ -15,7 +15,6 @@ class StatisticsHelper {
   Future<dynamic> fetchStatistics() async {
     var url = 'https://us-central1-wearequarantined.cloudfunctions.net/statistics';
     var response = await http.get(url);
-    print(response.body);
     print(response.statusCode);
 
     statistics = jsonDecode(response.body);

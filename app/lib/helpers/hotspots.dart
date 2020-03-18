@@ -24,7 +24,6 @@ class HotspotHelper {
       }
     );
 
-    print(response.body);
     print(response.statusCode);
 
     latestHotspotReference = jsonDecode(response.body);

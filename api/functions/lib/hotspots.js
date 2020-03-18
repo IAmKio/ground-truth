@@ -35,6 +35,11 @@ const request = functions.https.onRequest(async (request, response) => {
     return hotspotObject;
   });
 
+  await db
+    .collection('statistics')
+    .doc('maps')
+    .update("mapBrowserViews", admin.firestore.FieldValue.increment(1));
+
  return response.send({
    hotspots: mappedHotspotData
  });

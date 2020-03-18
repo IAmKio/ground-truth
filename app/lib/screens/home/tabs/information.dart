@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../helpers/router.dart';
 import '../../../helpers/annoucements.dart';
@@ -22,6 +23,45 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
 
   bool showShareCard = false;
   bool showAnnouncementsCards = false;
+
+  _launchURL(urlToLaunch) async {
+    if (await canLaunch(urlToLaunch)) {
+      await launch(urlToLaunch);
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext buildContext) {
+          return SimpleDialog(
+            contentPadding: EdgeInsets.only(top: 24, left: 24, right: 24),
+            title: Text('Sorry...'),
+            children: <Widget>[
+              new Text('We tried to open this link but encountered issues.'),
+              new Text('Here is the link we tried to open. You can copy this link.'),
+              new TextFormField(
+                initialValue: urlToLaunch
+              ),
+              new ButtonBar(
+                children: <Widget>[
+                  new FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }, 
+                    child: Text(
+                      'OK',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                      ),
+                    )
+                  )
+                ]
+              )
+            ],
+          );
+        }
+      );
+    }
+  }
 
   @override
   void initState() {
@@ -107,6 +147,32 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
       )
     );
 
+    widgets.add(
+      new AnimatedSize(
+        child: new Container(
+          child: Card(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(Icons.code, size: 50),
+                  title: Text('This is an Open Source project'),
+                  subtitle: Text("Anyone view, contribute and download all the code that runs this app and service. Tap here to view the Github project for Quarantine."),
+                  onTap: () {
+                    _launchURL('https://github.com/IAmKio/quarantined');
+                  },
+                ),
+              ],
+            ),
+          ),
+          height: showShareCard ? null : 0,
+        ),
+        duration: new Duration(milliseconds: 500),
+        curve: Curves.fastOutSlowIn,
+        vsync: this
+      )
+    );
+
     if (announcementsHelper.loaded) {
       List<dynamic> announcements = announcementsHelper.announcements['announcements'];
 
@@ -128,6 +194,13 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
                         style: Theme.of(context).textTheme.title
                       ),
                       subtitle: Text(announcement['description'] ?? ''),
+                      onTap: () {
+                        if (announcement['url'] != null) {
+                          _launchURL(announcement['url']);
+                        } else {
+                          print('No link was found against this card.');
+                        }
+                      },
                     ),
                   ],
                 ),
