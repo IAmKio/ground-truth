@@ -39,8 +39,10 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
 
     await announcementsHelper.fetchAnnouncements()
     .then((v) {
-      setState(() {
-        showAnnouncementsCards = true;
+      Timer(Duration(milliseconds: 500), () {
+        setState(() {
+          showAnnouncementsCards = true;
+        });
       });
     });
 
@@ -105,6 +107,7 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
       )
     );
 
+    if (announcementsHelper.loaded) {
       List<dynamic> announcements = announcementsHelper.announcements['announcements'];
 
       announcements.forEach((announcement) {
@@ -121,10 +124,10 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
                   children: <Widget>[
                     ListTile(
                       title: Text(
-                        '${announcement['title']}' ,
+                        '${announcement['title'] ?? ''}' ,
                         style: Theme.of(context).textTheme.title
                       ),
-                      subtitle: Text(announcement['description']),
+                      subtitle: Text(announcement['description'] ?? ''),
                     ),
                   ],
                 ),
@@ -133,6 +136,7 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
           )
         );
       });
+    }
 
     return widgets;
   }

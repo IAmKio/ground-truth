@@ -178,6 +178,8 @@ class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> with Tick
                 );
                 
                 print('r: $r');
+                Navigator.pop(context);
+                Navigator.pop(context);
               },
               child: Card(
                 color: Colors.greenAccent,
