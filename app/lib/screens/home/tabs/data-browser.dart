@@ -14,7 +14,7 @@ class _DataBrowserScreenState extends State<DataBrowserScreen> with TickerProvid
   var routerHelper = RouterHelper();
   var statisticsHelper = StatisticsHelper();
 
-  bool loaded = true;
+  bool loaded = false;
   bool showStatsCards = false;
 
   @override
@@ -27,42 +27,57 @@ class _DataBrowserScreenState extends State<DataBrowserScreen> with TickerProvid
   void start() async {
     await statisticsHelper.fetchStatistics();
 
-    setState(() {
-      loaded = true;
-      showStatsCards = true;
-    });
+    if (this.mounted) {
+      setState(() {
+        loaded = true;
+        showStatsCards = true;
+      });
+    }
   }
 
   List<Widget> buildWidgets() {
     List<Widget> widgets = [];
-    List<dynamic> stats = statisticsHelper.statistics['statistics'];
 
-    stats.forEach((stat) {
-      widgets.add(
-        AnimatedSize(
-          duration: Duration(milliseconds: 500),
-          vsync: this,
-          curve: Curves.fastOutSlowIn,
-          child: Container(
-            height: showStatsCards ? null : 0,
-            child: Card(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  ListTile(
-                    title: Text(
-                      '${stat['name']}: ${stat['count']}' ,
-                      style: Theme.of(context).textTheme.title
+    if (loaded) {
+      List<dynamic> stats = statisticsHelper.statistics['statistics'];
+
+      stats.forEach((stat) {
+        widgets.add(
+          AnimatedSize(
+            duration: Duration(milliseconds: 500),
+            vsync: this,
+            curve: Curves.fastOutSlowIn,
+            child: Container(
+              height: showStatsCards ? null : 0,
+              child: Card(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    ListTile(
+                      title: Text(
+                        '${stat['name']}: ${stat['count']}' ,
+                        style: Theme.of(context).textTheme.title
+                      ),
+                      subtitle: Text(stat['description']),
                     ),
-                    subtitle: Text(stat['description']),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
+          )
+        );
+      });
+    } else {
+      widgets.add(AnimatedSize(
+        duration: Duration(milliseconds: 500),
+        vsync: this,
+        curve: Curves.fastOutSlowIn,
+        child: Container(
+              height: showStatsCards ? 0 : null,
+              child: LinearProgressIndicator()
         )
-      );
-    });
+      ));
+    }
 
     return widgets;
   }

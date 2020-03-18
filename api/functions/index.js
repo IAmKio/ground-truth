@@ -6,6 +6,7 @@ const layers = require('./lib/layers');
 const presences = require('./lib/presence');
 const hotspots = require('./lib/hotspots');
 const statistics = require('./lib/statistics');
+const annoucements = require('./lib/announcements');
 
 let serviceAccount = null;
 
@@ -45,3 +46,4 @@ exports.layers = layers;
 exports.presences = presences;
 exports.hotspots = hotspots;
 exports.statistics = statistics;
+exports.annoucements = annoucements;

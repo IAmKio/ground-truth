@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
 import '../../../helpers/router.dart';
+import '../../../helpers/annoucements.dart';
 
 import '../../../classes/home.dart';
 
@@ -15,6 +18,10 @@ class InformationScreen extends StatefulWidget {
 
 class _InformationScreenState extends State<InformationScreen> with TickerProviderStateMixin {
   var routerHelper = RouterHelper();
+  var announcementsHelper = AnnouncementsHelper();
+
+  bool showShareCard = false;
+  bool showAnnouncementsCards = false;
 
   @override
   void initState() {
@@ -24,7 +31,15 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
   }
 
   void start() async {
-    setState(() {});
+    new Timer(new Duration(milliseconds: 250), () {
+      setState(() {
+        showShareCard = true;
+      });
+    });
+
+    if (this.mounted) {
+      setState(() {});
+    }
   }
 
   List<Widget> buildWidgets() {
@@ -59,6 +74,58 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
         vsync: this
       )
     );
+
+    widgets.add(
+      new AnimatedSize(
+        child: new Container(
+          child: Card(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(Icons.favorite, size: 50),
+                  title: Text('Share the movement'),
+                  subtitle: Text("This app works best when everyone is helping. Tap here to share this app with your friends and family."),
+                ),
+              ],
+            ),
+          ),
+          height: showShareCard ? null : 0,
+        ),
+        duration: new Duration(milliseconds: 500),
+        curve: Curves.fastOutSlowIn,
+        vsync: this
+      )
+    );
+
+      List<dynamic> stats = announcementsHelper.announcements['announcements'];
+
+      stats.forEach((stat) {
+        widgets.add(
+          AnimatedSize(
+            duration: Duration(milliseconds: 500),
+            vsync: this,
+            curve: Curves.fastOutSlowIn,
+            child: Container(
+              height: showStatsCards ? null : 0,
+              child: Card(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    ListTile(
+                      title: Text(
+                        '${stat['name']}: ${stat['count']}' ,
+                        style: Theme.of(context).textTheme.title
+                      ),
+                      subtitle: Text(stat['description']),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
+        );
+      });
 
     return widgets;
   }

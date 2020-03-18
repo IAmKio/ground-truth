@@ -6,6 +6,7 @@ class StatisticsHelper {
   static final StatisticsHelper _singleton = new StatisticsHelper._internal();
 
   Map<String, dynamic> statistics;
+  bool loaded = false;
   
   factory StatisticsHelper() {
     return _singleton;
@@ -18,6 +19,7 @@ class StatisticsHelper {
     print(response.statusCode);
 
     statistics = jsonDecode(response.body);
+    loaded = true;
 
     return Future.value(statistics);
   }
