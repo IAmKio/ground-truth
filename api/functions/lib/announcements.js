@@ -17,7 +17,7 @@ const request = functions.https.onRequest(async (request, response) => {
     query: request.query,
   });
 
-  const annoucementsData = await db.collection('annoucements').get()
+  const announcementsData = await db.collection('announcements').get()
   .then((snapshot) => {
     console.log('Successfully got Announcements:', snapshot);
 
@@ -26,7 +26,7 @@ const request = functions.https.onRequest(async (request, response) => {
 
   console.log('Announcements read complete.');
 
-  mappedAnnouncementsData = annoucementsData.docs.map((thisannoucementsData) => thisannoucementsData.data());
+  mappedAnnouncementsData = announcementsData.docs.map((thisannouncementsData) => thisannouncementsData.data());
 
   return response.send({
     announcements: mappedAnnouncementsData

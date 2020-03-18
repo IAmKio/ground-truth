@@ -37,6 +37,13 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
       });
     });
 
+    await announcementsHelper.fetchAnnouncements()
+    .then((v) {
+      setState(() {
+        showAnnouncementsCards = true;
+      });
+    });
+
     if (this.mounted) {
       setState(() {});
     }
@@ -98,26 +105,26 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
       )
     );
 
-      List<dynamic> stats = announcementsHelper.announcements['announcements'];
+      List<dynamic> announcements = announcementsHelper.announcements['announcements'];
 
-      stats.forEach((stat) {
+      announcements.forEach((announcement) {
         widgets.add(
           AnimatedSize(
             duration: Duration(milliseconds: 500),
             vsync: this,
             curve: Curves.fastOutSlowIn,
             child: Container(
-              height: showStatsCards ? null : 0,
+              height: showAnnouncementsCards ? null : 0,
               child: Card(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     ListTile(
                       title: Text(
-                        '${stat['name']}: ${stat['count']}' ,
+                        '${announcement['title']}' ,
                         style: Theme.of(context).textTheme.title
                       ),
-                      subtitle: Text(stat['description']),
+                      subtitle: Text(announcement['description']),
                     ),
                   ],
                 ),
