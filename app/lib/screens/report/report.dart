@@ -63,7 +63,7 @@ class _ReportScreenState extends State<ReportScreen> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 ListTile(
-                  leading: Icon(Icons.bug_report, size: 50),
+                  leading: Icon(Icons.add_location, size: 50),
                   title: Text(
                     '${layer['friendlyName']} (${layer['technicalName']})',
                     style: Theme.of(context).textTheme.title

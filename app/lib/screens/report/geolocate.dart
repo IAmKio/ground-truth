@@ -98,7 +98,7 @@ class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> with Tick
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
-              leading: Icon(Icons.bug_report, size: 50),
+              leading: Icon(Icons.add_location, size: 50),
               title: Text(
                 '${selectedLayer['friendlyName']} (${selectedLayer['technicalName']})',
                 style: Theme.of(context).textTheme.title,

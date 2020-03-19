@@ -1,4 +1,4 @@
-package com.digitalindustria.quarantine.app
+package com.digitalindustria.apps.android.quarantined
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

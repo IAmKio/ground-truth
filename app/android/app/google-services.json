@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:764869948606:android:a991cab2a88b67a477daef",
+        "mobilesdk_app_id": "1:764869948606:android:9c98b9eaee4e53fc77daef",
         "android_client_info": {
-          "package_name": "com.digitalindustria.quarantine.app"
+          "package_name": "com.digitalindustria.apps.android.quarantined"
         }
       },
       "oauth_client": [
@@ -32,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "764869948606-lduo4tlju87tifosth2p7rgrto9ofs79.apps.googleusercontent.com",
+              "client_id": "764869948606-07gus2ofj0qr3hkqe7uthuj6i9pl11nc.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.digitalindustria.quarantine.app"
+                "bundle_id": "com.digitalindustria.apps.ios.quarantined"
               }
             }
           ]

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:location/location.dart';
@@ -22,11 +24,12 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   var userHelper = UserHelper();
   var routerHelper = RouterHelper();
 
   bool online = false;
+  bool reportOpacity = true;
 
   Location location = new Location();
 
@@ -65,6 +68,18 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       online = true;
     });
+
+    Timer.periodic(Duration(milliseconds: 1000), (Timer r) {
+      setState(() {
+        reportOpacity = false;
+      });
+    });
+
+    Timer.periodic(Duration(milliseconds: 2000), (Timer r) {
+      setState(() {
+        reportOpacity = true;
+      });
+    });
   }
 
   void setupGeolocation() async {
@@ -99,11 +114,19 @@ class _HomeScreenState extends State<HomeScreen> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        floatingActionButton: new FloatingActionButton(
-          child: new Icon(Icons.my_location),
-          onPressed: () {
-            routerHelper.router.navigateTo(context, '/report');
-          }
+        floatingActionButton: AnimatedOpacity(
+          opacity: reportOpacity ? 0.25 : 1,
+          duration: Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+          child: new FloatingActionButton(
+            elevation: 0,
+            isExtended: true,
+            tooltip: "Report a symptom",
+            child: new Icon(Icons.my_location),
+            onPressed: () {
+              routerHelper.router.navigateTo(context, '/report');
+            }
+          ),
         ),
         appBar: AppBar(
           bottom: TabBar(

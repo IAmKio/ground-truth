@@ -105,6 +105,33 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
       new AnimatedSize(
         child: new Container(
           child: Card(
+            color: Colors.yellow.shade400,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  title: Text(
+                    'Quarantined gives everyone the opportunity to report their symptoms anonymously for the benefit of others.',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          height: _height,
+        ),
+        duration: new Duration(milliseconds: 500),
+        curve: Curves.fastOutSlowIn,
+        vsync: this
+      )
+    );
+
+    widgets.add(
+      new AnimatedSize(
+        child: new Container(
+          child: Card(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -179,6 +206,31 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
     if (announcementsHelper.loaded) {
       List<dynamic> announcements = announcementsHelper.announcements['announcements'];
 
+      widgets.add(
+        AnimatedSize(
+          duration: Duration(milliseconds: 500),
+          vsync: this,
+          curve: Curves.fastOutSlowIn,
+          child: Container(
+            height: showAnnouncementsCards ? null : 0,
+            child: Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(Icons.info_outline, size: 50),
+                    title: Text(
+                      'News, Alerts and Information' ,
+                    ),
+                    subtitle: Text('Tap any of the articles below to view more information online.'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
+      );
+
       announcements.forEach((announcement) {
         widgets.add(
           AnimatedSize(
@@ -193,7 +245,7 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
                   children: <Widget>[
                     ListTile(
                       title: Text(
-                        '${announcement['title'] ?? ''}' ,
+                        '📰 ${announcement['title'] ?? ''}' ,
                         style: Theme.of(context).textTheme.title
                       ),
                       subtitle: Text(announcement['description'] ?? ''),
