@@ -1,4 +1,4 @@
-// Copyright 2020 k
+// Copyright 2020 Kieran Goodary, Digital Industria Ltd
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,8 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-
 
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
