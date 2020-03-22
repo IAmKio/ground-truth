@@ -26,6 +26,7 @@ let db = admin.firestore();
 
 const request = functions.https.onRequest(async (request, response) => {
   console.log('Incoming data:', {
+    headers: request.headers,
     body: request.body,
     query: request.query,
   });
