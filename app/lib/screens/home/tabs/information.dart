@@ -125,7 +125,7 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
               children: <Widget>[
                 ListTile(
                   title: Text(
-                    'Quarantined gives everyone the opportunity to report their symptoms anonymously for the benefit of others.',
+                    'Ground Truth gives everyone the opportunity to report their symptoms anonymously for the benefit of others.',
                     style: TextStyle(
                       fontWeight: FontWeight.bold
                     ),
@@ -201,7 +201,7 @@ class _InformationScreenState extends State<InformationScreen> with TickerProvid
                 ListTile(
                   leading: Icon(Icons.code, size: 50),
                   title: Text('This is an Open Source project'),
-                  subtitle: Text("Anyone can view, contribute and download all the code that runs this app and service. Tap here to view the Github project for Quarantine."),
+                  subtitle: Text("Anyone can view, contribute and download all the code that runs this app and service. Tap here to view the Github project for Ground Truth."),
                   onTap: () {
                     _launchURL('https://github.com/IAmKio/quarantined');
                   },

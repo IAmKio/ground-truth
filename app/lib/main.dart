@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Quarantined',
+      title: 'Ground Truth',
       navigatorObservers: [
         FirebaseAnalyticsObserver(analytics: analytics),
       ],

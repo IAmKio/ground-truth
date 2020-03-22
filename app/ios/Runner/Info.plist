@@ -11,7 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Quarantine</string>
+	<string>Ground Truth</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -23,11 +23,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Quarantine needs access to your location, anonymously, when open and in the background.</string>
+	<string>Ground Truth needs access to your location, anonymously, when open and in the background.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Quarantine needs access to your location, anonymously, when in the background.</string>
+	<string>Ground Truth needs access to your location, anonymously, when in the background.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Quarantine needs access to your location, anonymously, when open.</string>
+	<string>Ground Truth needs access to your location, anonymously, when open.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

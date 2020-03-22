@@ -151,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ],
           ),
           title: Text(
-            'Quarantined',
+            'Ground Truth',
             style: TextStyle(
               fontWeight: FontWeight.bold
             ),

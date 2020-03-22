@@ -140,7 +140,7 @@ class _ReportGeolocateScreenState extends State<ReportGeolocateScreen> with Tick
                       'Getting a rough location...',
                       style: Theme.of(context).textTheme.title
                     ),
-                    subtitle: Text('This allows Quarantined to track the rough location of this hotspot...'),
+                    subtitle: Text('This allows Ground Truth to track the rough location of this hotspot...'),
                   ),
                 ],
               ),
