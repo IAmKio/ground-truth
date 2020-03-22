@@ -26,6 +26,9 @@ jobs:
         cd api && firebase use wearequarantined
         cd functions && npm i && cd ..
         firebase deploy --only functions --token "$FIREBASE_TOKEN" --force
+    - name: Deploy to Firebase Hosting
+      run: |
+        firebase deploy --only hosting --token "$FIREBASE_TOKEN" --force
       env:
         CI: true
         FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
