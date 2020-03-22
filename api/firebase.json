@@ -1,1 +1,23 @@
-{}
+{
+  "hosting": {
+  "rewrites": [{
+    "source": "/announcements",
+    "function": "announcements"
+  }, {
+    "source": "/hotspots",
+    "function": "hotspots"
+  }, {
+    "source": "/ingest",
+    "function": "ingest"
+  }, {
+    "source": "/layers",
+    "function": "layers"
+  }, {
+    "source": "/presence",
+    "function": "presence"
+  }, {
+    "source": "/statistics",
+    "function": "statistics"
+  }]
+ }
+}
