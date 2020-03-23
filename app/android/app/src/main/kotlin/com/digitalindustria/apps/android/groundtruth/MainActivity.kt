@@ -1,4 +1,4 @@
-package com.digitalindustria.apps.android.quarantined
+package com.digitalindustria.apps.android.groundtruth
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
