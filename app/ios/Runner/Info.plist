@@ -23,11 +23,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Ground Truth needs access to your location, anonymously, when open and in the background.</string>
+	<string>Ground Truth needs access to your location when open and in the background. We use your location only when submitting a report to the Ground Truth network to help build a map of hotspots. Your location is anonymous and cannot identify you.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Ground Truth needs access to your location, anonymously, when in the background.</string>
+	<string>Ground Truth needs access to your location when in the background. We use your location only when submitting a report to the Ground Truth network to help build a map of hotspots. Your location is anonymous and cannot identify you.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Ground Truth needs access to your location, anonymously, when open.</string>
+	<string>Ground Truth needs access to your location when open. We use your location only when submitting a report to the Ground Truth network to help build a map of hotspots. Your location is anonymous and cannot identify you.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

@@ -43,7 +43,7 @@ const request = functions.https.onRequest(async (request, response) => {
 
   mappedAnnouncementsData = announcementsData.docs.map((thisannouncementsData) => thisannouncementsData.data());
 
-  return response.send({
+  return response.set({ 'Access-Control-Allow-Origin': '*' }).send({
     announcements: mappedAnnouncementsData
   });
 });
