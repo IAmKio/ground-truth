@@ -50,7 +50,7 @@ const request = functions.https.onRequest(async (request, response) => {
     return layerObj;
   });
 
- return response.send({
+ return response.set({ 'Access-Control-Allow-Origin': '*' }).send({
    layers: mappedLayerData
  });
 });

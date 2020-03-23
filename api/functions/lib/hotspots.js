@@ -55,7 +55,7 @@ const request = functions.https.onRequest(async (request, response) => {
     .doc('mapBrowserViews')
     .update("count", admin.firestore.FieldValue.increment(1));
 
- return response.send({
+ return response.set({ 'Access-Control-Allow-Origin': '*' }).send({
    hotspots: mappedHotspotData
  });
 });

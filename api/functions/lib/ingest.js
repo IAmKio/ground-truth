@@ -55,7 +55,7 @@ db.collection('statistics').doc('hotspots')
 
 console.log('Ingestion complete.')
 
- return response.send({
+ return response.set({ 'Access-Control-Allow-Origin': '*' }).send({
    hotspotReference
  });
 });

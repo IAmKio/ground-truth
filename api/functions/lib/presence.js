@@ -43,7 +43,7 @@ const request = functions.https.onRequest(async (request, response) => {
 
   console.log('Presence recorded.');
 
- return response.send('OK');
+ return response.set({ 'Access-Control-Allow-Origin': '*' }).send('OK');
 });
 
 module.exports = request;
