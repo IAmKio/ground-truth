@@ -35,8 +35,8 @@ const request = functions.https.onRequest(async (request, response) => {
   res.set('Access-Control-Allow-Methods', 'GET, PUT, POST, OPTIONS');
   res.set('Access-Control-Allow-Headers', '*');
   
-   if (req.method === 'OPTIONS') {
-     res.end();
+  if (req.method === 'OPTIONS') {
+    response.end();
   }
 
   const hotspotReference = await db.collection('hotspots').doc().set({
@@ -64,7 +64,7 @@ const request = functions.https.onRequest(async (request, response) => {
 
   console.log('Ingestion complete.')
 
-  res.send({
+  response.send({
     hotspotReference
   });
 });
