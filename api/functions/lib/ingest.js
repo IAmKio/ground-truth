@@ -16,7 +16,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const geohash = require('ngeohash');
 const cors = require('cors')({
-  origin: true
+  origin: false
 });
 
 try {
