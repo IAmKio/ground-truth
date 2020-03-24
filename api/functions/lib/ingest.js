@@ -15,7 +15,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const geohash = require('ngeohash');
-const cors = require('cors');
 
 try {
   admin.initializeApp();
@@ -32,35 +31,41 @@ const request = functions.https.onRequest(async (request, response) => {
     query: request.query,
   });
 
-  return cors(req, res, async () => {
-    const hotspotReference = await db.collection('hotspots').doc().set({
-      anonymousUserId: request.body.anonymousUserId,
-      geopoint: new admin.firestore.GeoPoint(
-        parseFloat(request.body.latitude),
-        parseFloat(request.body.longitude)
-      ),
-      geohash: geohash.encode(
-        parseFloat(request.body.latitude),
-        parseFloat(request.body.longitude)
-      ),
-      layerId: request.body.layerId,
-      notes: [],
-      observed: false,
-      createdAt: admin.firestore.FieldValue.serverTimestamp(),
-      updatedAt: admin.firestore.FieldValue.serverTimestamp()
-    })
-    .then((writeResult) => {
-      console.log('Successfully wrote hotspot:', writeResult);
-    });
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Methods', 'GET, PUT, POST, OPTIONS');
+  res.set('Access-Control-Allow-Headers', '*');
+  
+   if (req.method === 'OPTIONS') {
+     res.end();
+  }
 
-    db.collection('statistics').doc('hotspots')
-      .update("count", admin.firestore.FieldValue.increment(1));
+  const hotspotReference = await db.collection('hotspots').doc().set({
+    anonymousUserId: request.body.anonymousUserId,
+    geopoint: new admin.firestore.GeoPoint(
+      parseFloat(request.body.latitude),
+      parseFloat(request.body.longitude)
+    ),
+    geohash: geohash.encode(
+      parseFloat(request.body.latitude),
+      parseFloat(request.body.longitude)
+    ),
+    layerId: request.body.layerId,
+    notes: [],
+    observed: false,
+    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    updatedAt: admin.firestore.FieldValue.serverTimestamp()
+  })
+  .then((writeResult) => {
+    console.log('Successfully wrote hotspot:', writeResult);
+  });
 
-    console.log('Ingestion complete.')
+  db.collection('statistics').doc('hotspots')
+    .update("count", admin.firestore.FieldValue.increment(1));
 
-    res.send({
-      hotspotReference
-    });
+  console.log('Ingestion complete.')
+
+  res.send({
+    hotspotReference
   });
 });
 
