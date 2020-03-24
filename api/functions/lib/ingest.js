@@ -34,7 +34,7 @@ const request = functions.https.onRequest(async (request, response) => {
     query: request.query,
   });
 
-  return cors(req, res, () => {
+  return cors(req, res, async () => {
     const hotspotReference = await db.collection('hotspots').doc().set({
       anonymousUserId: request.body.anonymousUserId,
       geopoint: new admin.firestore.GeoPoint(
