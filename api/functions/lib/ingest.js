@@ -31,6 +31,8 @@ const request = functions.https.onRequest(async (request, response) => {
     query: request.query,
   });
 
+  console.log(request.body);
+
   response.set('Access-Control-Allow-Origin', '*');
   response.set('Access-Control-Allow-Methods', 'GET, PUT, POST, OPTIONS');
   response.set('Access-Control-Allow-Headers', '*');
