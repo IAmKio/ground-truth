@@ -31,9 +31,9 @@ const request = functions.https.onRequest(async (request, response) => {
     query: request.query,
   });
 
-  res.set('Access-Control-Allow-Origin', '*');
-  res.set('Access-Control-Allow-Methods', 'GET, PUT, POST, OPTIONS');
-  res.set('Access-Control-Allow-Headers', '*');
+  response.set('Access-Control-Allow-Origin', '*');
+  response.set('Access-Control-Allow-Methods', 'GET, PUT, POST, OPTIONS');
+  response.set('Access-Control-Allow-Headers', '*');
   
   if (req.method === 'OPTIONS') {
     response.end();
