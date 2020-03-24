@@ -35,7 +35,7 @@ const request = functions.https.onRequest(async (request, response) => {
   response.set('Access-Control-Allow-Methods', 'GET, PUT, POST, OPTIONS');
   response.set('Access-Control-Allow-Headers', '*');
   
-  if (req.method === 'OPTIONS') {
+  if (request.method === 'OPTIONS') {
     response.end();
   }
 
