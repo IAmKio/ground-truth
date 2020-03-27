@@ -50,6 +50,7 @@ const request = functions.https.onRequest(async (request, response) => {
   }
 
   const hotspotObject = {
+    entityId: request.body.entityId || 'groundtruth',
     anonymousUserId: request.body.anonymousUserId,
     geopoint: new admin.firestore.GeoPoint(
       parseFloat(request.body.latitude),
