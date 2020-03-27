@@ -1,4 +1,4 @@
-# Ground Truth Web App
+# Ground Truth API
 This is the home of the Ground Truth API.
 
 ## Mission
