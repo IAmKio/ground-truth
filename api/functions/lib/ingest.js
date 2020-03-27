@@ -22,7 +22,7 @@ const client = algoliasearch(
   functions.config().algolia.application_id,
   functions.config().algolia.admin_api_key,
 );
-const index = client.initIndex("production_groundtruth");
+const index = client.initIndex("production_groundtruth_hotspots");
 
 try {
   admin.initializeApp();
