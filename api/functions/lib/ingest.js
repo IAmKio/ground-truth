@@ -69,6 +69,7 @@ const request = functions.https.onRequest(async (request, response) => {
   const hotspotReference = await db.collection('hotspots').doc().set(hotspotObject)
   .then((writeResult) => {
     console.log('Successfully wrote hotspot:', writeResult);
+    return hotspotReference;
   });
 
   /**
@@ -77,6 +78,7 @@ const request = functions.https.onRequest(async (request, response) => {
 
   const objects = [
     {
+      objectID: hotspotReference.id,
       ...hotspotObject,
       _geoloc: {
         lat: parseFloat(request.body.latitude),
