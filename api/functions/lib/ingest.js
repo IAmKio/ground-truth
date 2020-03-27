@@ -46,7 +46,7 @@ const request = functions.https.onRequest(async (request, response) => {
   response.set('Access-Control-Allow-Headers', '*');
   
   if (request.method === 'OPTIONS') {
-    response.end();
+    return response.end();
   }
 
   const hotspotObject = {
