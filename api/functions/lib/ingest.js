@@ -16,6 +16,14 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const geohash = require('ngeohash');
 
+const algoliasearch = require("algoliasearch");
+
+const client = algoliasearch(
+  functions.config().algolia.application_id,
+  functions.config().algolia.admin_api_key,
+);
+const index = client.initIndex("production_groundtruth");
+
 try {
   admin.initializeApp();
 } catch (e) {
@@ -41,7 +49,7 @@ const request = functions.https.onRequest(async (request, response) => {
     response.end();
   }
 
-  const hotspotReference = await db.collection('hotspots').doc().set({
+  const hotspotObject = {
     anonymousUserId: request.body.anonymousUserId,
     geopoint: new admin.firestore.GeoPoint(
       parseFloat(request.body.latitude),
@@ -56,12 +64,37 @@ const request = functions.https.onRequest(async (request, response) => {
     observed: false,
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
     updatedAt: admin.firestore.FieldValue.serverTimestamp()
-  })
+  };
+
+  const hotspotReference = await db.collection('hotspots').doc().set(hotspotObject)
   .then((writeResult) => {
     console.log('Successfully wrote hotspot:', writeResult);
   });
 
-  db.collection('statistics').doc('hotspots')
+  /**
+   * Write to Algolia
+   */
+
+  const objects = [
+    {
+      ...hotspotObject,
+      _geoloc: {
+        lat: parseFloat(request.body.latitude),
+        lng: parseFloat(request.body.longitude)
+      }
+    }
+  ];
+  
+  await index
+    .saveObjects(objects)
+    .then(({ objectIDs }) => {
+      console.log('Successfulyl saved to Algolia:', objectIDs);
+    })
+    .catch(err => {
+      console.error('There was an error whilst writing to Algolia', err);
+    });
+
+  await db.collection('statistics').doc('hotspots')
     .update("count", admin.firestore.FieldValue.increment(1));
 
   console.log('Ingestion complete.')
