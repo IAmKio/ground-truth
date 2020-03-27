@@ -66,7 +66,7 @@ const request = functions.https.onRequest(async (request, response) => {
     updatedAt: admin.firestore.FieldValue.serverTimestamp()
   };
 
-  const hotspotReference = await db.collection('hotspots').doc().set(hotspotObject)
+  const hotspotReference = await db.collection('hotspots').add(hotspotObject)
   .then((writeResult) => {
     console.log('Successfully wrote hotspot:', writeResult);
     return writeResult;
