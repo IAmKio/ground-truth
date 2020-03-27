@@ -86,6 +86,8 @@ const request = functions.https.onRequest(async (request, response) => {
       }
     }
   ];
+
+  console.log('Attemptong to write to Algolia:', objects);
   
   await index
     .saveObjects(objects)
